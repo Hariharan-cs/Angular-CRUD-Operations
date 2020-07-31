@@ -1,0 +1,139 @@
+<form [formGroup]="profileForm" class="form" (ngSubmit)="saveUserDetails()" *ngIf="!AddEditVisible">
+    <div class="form-group">
+        <div class="container" style="margin-top: 50px;">
+            <div class="row">
+                <div class="col-md-12" *ngIf="userDetails.length != 0">
+                    <span style="float: right; margin-left:50px; margin-bottom: 50px; color:royalblue; cursor: pointer;" (click)="viewUsers()"> View Users</span>
+                    <span style="float: right; margin-bottom: 50px; color:royalblue; cursor: pointer;" routerLink="/"> Home </span>
+                </div>
+                <div class="col-md-6">
+                    <h3>Profile</h3>
+                    <label><span style="color: red;">* </span> First Name:</label>
+                    <input class="form-control" type="text" formControlName="firstName" maxlength="35"
+                        placeholder="Enter First name" required>
+
+                    <label> Last Name:</label>
+                    <input class="form-control" type="text" formControlName="lastName" maxlength="35"
+                        placeholder="Enter last name">
+
+                    <label> Gender:</label>
+                    <select class="custom-select" (change)="genderChange($event)" formControlName="gender">
+                        <option value="" disabled>Choose your gender</option>
+                        <option *ngFor="let gen of genders" [ngValue]="gen.value">{{gen.name}}</option>
+                    </select>
+
+                    <label><span style="color: red;">* </span> Date of Birth:</label>
+                    <input class="form-control" type="date" formControlName="dob" (change)="ageCalculator($event)"
+                        required>
+
+                    <label> Age:</label>
+                    <input class="form-control" type="number" formControlName="age" maxlength="2"
+                        placeholder="Enter Age" disabled> 
+
+                    <label><span style="color: red;">* </span> Phone Number:</label>
+                    <input class="form-control" type="number" formControlName="phonenumber" maxlength="15"
+                        placeholder="Enter phone number" required>
+
+                    <label> Email ID: </label>
+                    <input class="form-control" type="email" formControlName="emailId" maxlength="100"
+                        placeholder="Enter EmailID">
+                </div>
+
+                <div class="col-md-6">
+                    <h3>Address</h3>
+                    <label> AddressLine1:</label>
+                    <input class="form-control" type="text" formControlName="addressLine1" maxlength="100"
+                        placeholder="Enter Address Line One">
+
+                    <label>
+                        AddressLine2: </label>
+                    <input class="form-control" type="text" formControlName="addressLine2" maxlength="100"
+                        placeholder="Enter Address Line One">
+
+
+                    <label><span style="color: red;">* </span> Country:</label>
+                    <select class="custom-select" (change)="countryChange($event)" formControlName="country" required>
+                        <option value="" disabled>Choose your country</option>
+                        <option *ngFor="let cunt of countries" [ngValue]="cunt.value">{{cunt.name}}</option>
+                    </select>
+
+                    <label> State:</label>
+                    <select class="custom-select" (change)="stateChange($event)" formControlName="state">
+                        <option value="" disabled>Choose your state</option>
+                        <option *ngFor="let sts of finalStates" [ngValue]="sts.value">{{sts.name}}</option>
+                    </select>
+
+                    <label> City:</label>
+                    <input class="form-control" type="text" formControlName="city" maxlength="50"
+                        placeholder="Enter City">
+
+                    <label> Zip Code:</label>
+                    <input class="form-control" type="number" formControlName="zip" maxlength="6"
+                        placeholder="Enter Zip Code">
+
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" style="float:right; margin-bottom: 100px;" class="btn btn-primary"
+                        [disabled]="!profileForm.valid">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<div class="col-md-12" *ngIf="AddEditVisible" style="margin-top: 100px;">
+
+    <div class="col-md-12">
+        <span style="float: right; margin-left:50px; margin-bottom: 50px; color:royalblue; cursor: pointer;" (click)="addUser()"> Add New User</span>
+        <span style="float: right; margin-bottom: 50px; color:royalblue; cursor: pointer;" routerLink="/"> Home </span>
+    </div>
+
+    <h3 style="text-align: center;"> Registered Users </h3>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Sl No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">DOB</th>
+                <th scope="col">Age</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address 1</th>
+                <th scope="col">Address 2</th>
+                <th scope="col">Country</th>
+                <th scope="col">State</th>
+                <th scope="col">City</th>
+                <th scope="col">Zip</th>
+                <th scope="col">Modify</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of userDetails; let i = index">
+                <th scope="row">{{i+1}}</th>
+                <td>{{user.firstName}} </td>
+                <td>{{user.gender}}</td>
+                <td>{{user.dob}}</td>
+                <td>{{user.age}}</td>
+                <td>{{user.phonenumber}}</td>
+                <td>{{user.emailId}}</td>
+                <td>{{user.addressLine1}}</td>
+                <td>{{user.addressLine2}}</td>
+                <td>{{user.country}}</td>
+                <td>{{user.state}}</td>
+                <td>{{user.city}}</td>
+                <td>{{user.zip}}</td>
+                <th scope="col"> 
+                    <span (click)="Edit(i)" style="margin-right: 15px; cursor: pointer;">
+                        <svg _ngcontent-coj-c45="" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 383.947 383.947" xml:space="preserve" style="enable-background: new 0 0 383.947 383.947; width:14px"><g _ngcontent-coj-c45=""><g _ngcontent-coj-c45=""><g _ngcontent-coj-c45=""><polygon _ngcontent-coj-c45="" points="0,303.947 0,383.947 80,383.947 316.053,147.893 236.053,67.893 			"></polygon><path _ngcontent-coj-c45="" d="M377.707,56.053L327.893,6.24c-8.32-8.32-21.867-8.32-30.187,0l-39.04,39.04l80,80l39.04-39.04
+                            C386.027,77.92,386.027,64.373,377.707,56.053z"></path></g></g></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g><g _ngcontent-coj-c45=""></g></svg>
+                    </span>
+                    <span (click)="Delete(i)" style="cursor: pointer;">
+                        <svg _ngcontent-uig-c45="" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 459 459" xml:space="preserve" style="enable-background: new 0 0 459 459;"><g _ngcontent-uig-c45=""><g _ngcontent-uig-c45="" id="delete"><path _ngcontent-uig-c45="" d="M76.5,408c0,28.05,22.95,51,51,51h204c28.05,0,51-22.95,51-51V102h-306V408z M408,25.5h-89.25L293.25,0h-127.5l-25.5,25.5
+                            H51v51h357V25.5z"></path></g></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g><g _ngcontent-uig-c45=""></g></svg>
+                    </span>
+            </tr>
+        </tbody>
+    </table>
+</div>
